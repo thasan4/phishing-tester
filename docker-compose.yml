@@ -1,0 +1,28 @@
+services:
+  api:
+    build:
+      context: .
+      target: production
+      dockerfile: ./apps/api/Dockerfile
+    env_file:
+      - ./apps/api/.env
+    ports:
+      - "3000:3000"
+  
+  web:
+    build:
+      context: .
+      target: production
+      dockerfile: ./apps/web/Dockerfile
+    ports:
+      - "8080:80"
+  
+  mongo-db:
+    image: 'mongo:7.0.14'
+    ports:
+      - '27017:27017'
+    env_file:
+      - ./apps/api/.env
+    volumes:
+      - ./docker/admin-mongo:/data/db
+  
